@@ -1,6 +1,9 @@
 import ipyparallel as ipp
 import json
-import pandas
+import jsonschema
+import pandas as pd
+
+
 
 # from fhir.resources.patient import Patient
 def list_files_in_path(path):
@@ -26,22 +29,45 @@ def path_split(path_list,num_exc):
 def path_to_json(path):
     with open(path) as json_file:
         file_data = json.load(json_file)
-        print(file_data)
-        # pandas.read_json()
+        return file_data
+def path_to_validated_json(path,schema):
+    from jsonschema import validate
+    with open(path) as json_file:
+        file_data = json.load(json_file)
+        try:
+            validate(file_data, schema)
+        except jsonschema.exceptions.ValidationError as ex:
+            print(ex)
+            return ""
+        return file_data
+def schema_type_match(entity_name, schema_path):
+    if entity_name == "patient":
+        return path_to_json(schema_path + "/patient.schema.json")
+        # return path_to_json("/home/nick/PycharmProjects/ClusteredDataIngestion/venv/resources/schema/patient.schema.json")
+        # "/home/nick/PycharmProjects/ClusteredDataIngestion/venv/resources/schema/patient.schema.json"
 
-#todo json to df
+    if entity_name == "fhir":
+        return path_to_json(schema_path + "/fhir.schema.json")
 
-# Press the green button in the gutter to run the script.
+    #todo json to df
+
 if __name__ == '__main__':
     # cluster = ipp.Cluster()
-    # resource_path = '/home/nick/PycharmProjects/pythonProject/venv/resources'
+    resource_path = '/home/nick/PycharmProjects/ClusteredDataIngestion/venv/resources'
     # todo parameterize resource path,
-    resource_path = '/home/nick/PycharmProjects/ClusteredDataIngestion/venv/resources/synthea_sample_data_fhir_r4_nov2021/'
-    path_list = list_files_in_path(resource_path)
+    synthea_path = resource_path + "/synthea_sample_data_fhir_r4_nov2021/"
+    path_list = list_files_in_path(synthea_path)
 
     # todo parameterize num executors
     num_executors = 4
-    executor_path_lists = path_split(path_list,num_executors)
+    executor_path_lists = path_split(path_list, num_executors)
     # print(executor_path_lists)
 
-    path_to_json(path_list.pop())
+    # todo parameterize entity type/schema
+
+    json_record = path_to_json(path_list.pop())
+    schema_path = resource_path+"/schema"
+    json_schema = schema_type_match("patient", schema_path)
+
+    print(json_schema)
+    pd.read_json()
