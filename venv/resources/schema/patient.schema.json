@@ -40,21 +40,21 @@
           "$ref": "Narrative.schema.json#/definitions/Narrative"
         },
         "contained": {
-          "description": "These resources do not have an independent existence apart from the resource that contains them - they cannot be identified independently, nor can they have their own independent transaction scope. This is allowed to be a Parameters resource if and only if it is referenced by a resource that provides context/meaning.",
+          "description": "These resources do not have an independent existence apart from the resource that contains them - they cannot be identified independently, and nor can they have their own independent transaction scope.",
           "items": {
             "$ref": "ResourceList.schema.json#/definitions/ResourceList"
           },
           "type": "array"
         },
         "extension": {
-          "description": "May be used to represent additional information that is not part of the basic definition of the resource. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.",
+          "description": "May be used to represent additional information that is not part of the basic definition of the resource. To make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.",
           "items": {
             "$ref": "Extension.schema.json#/definitions/Extension"
           },
           "type": "array"
         },
         "modifierExtension": {
-          "description": "May be used to represent additional information that is not part of the basic definition of the resource and that modifies the understanding of the element that contains it and/or the understanding of the containing element\u0027s descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.\n\nModifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself).",
+          "description": "May be used to represent additional information that is not part of the basic definition of the resource and that modifies the understanding of the element that contains it and/or the understanding of the containing element\u0027s descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.\n\nModifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself).",
           "items": {
             "$ref": "Extension.schema.json#/definitions/Extension"
           },
@@ -91,7 +91,12 @@
         },
         "gender": {
           "description": "Administrative Gender - the gender that the patient is considered to have for administration and record keeping purposes.",
-          "$ref": "#/definitions/code"
+          "enum": [
+            "male",
+            "female",
+            "other",
+            "unknown"
+          ]
         },
         "_gender": {
           "description": "Extensions for gender",
@@ -116,7 +121,7 @@
         },
         "deceasedDateTime": {
           "description": "Indicates if the individual is deceased or not.",
-          "pattern": "^([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\\.[0-9]{1,9})?)?)?(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)?)?)?$",
+          "pattern": "^([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\\.[0-9]+)?(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))?)?)?$",
           "type": "string"
         },
         "_deceasedDateTime": {
@@ -145,7 +150,7 @@
         },
         "multipleBirthInteger": {
           "description": "Indicates whether the patient is part of a multiple (boolean) or indicates the actual birth order (integer).",
-          "pattern": "^[0]|[-+]?[1-9][0-9]*$",
+          "pattern": "^-?([0]|([1-9][0-9]*))$",
           "type": "number"
         },
         "_multipleBirthInteger": {
@@ -185,14 +190,13 @@
           "$ref": "Reference.schema.json#/definitions/Reference"
         },
         "link": {
-          "description": "Link to a Patient or RelatedPerson resource that concerns the same actual individual.",
+          "description": "Link to another patient resource that concerns the same actual patient.",
           "items": {
             "$ref": "#/definitions/Patient_Link"
           },
           "type": "array"
         }
       },
-      "type": "object",
       "additionalProperties": false,
       "required": [
         "resourceType"
@@ -206,14 +210,14 @@
           "$ref": "string.schema.json#/definitions/string"
         },
         "extension": {
-          "description": "May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.",
+          "description": "May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.",
           "items": {
             "$ref": "Extension.schema.json#/definitions/Extension"
           },
           "type": "array"
         },
         "modifierExtension": {
-          "description": "May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element\u0027s descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.\n\nModifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself).",
+          "description": "May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element\u0027s descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.\n\nModifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself).",
           "items": {
             "$ref": "Extension.schema.json#/definitions/Extension"
           },
@@ -243,7 +247,12 @@
         },
         "gender": {
           "description": "Administrative Gender - the gender that the contact person is considered to have for administration and record keeping purposes.",
-          "$ref": "#/definitions/code"
+          "enum": [
+            "male",
+            "female",
+            "other",
+            "unknown"
+          ]
         },
         "_gender": {
           "description": "Extensions for gender",
@@ -258,7 +267,6 @@
           "$ref": "Period.schema.json#/definitions/Period"
         }
       },
-      "type": "object",
       "additionalProperties": false
     },
     "Patient_Communication": {
@@ -269,21 +277,21 @@
           "$ref": "string.schema.json#/definitions/string"
         },
         "extension": {
-          "description": "May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.",
+          "description": "May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.",
           "items": {
             "$ref": "Extension.schema.json#/definitions/Extension"
           },
           "type": "array"
         },
         "modifierExtension": {
-          "description": "May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element\u0027s descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.\n\nModifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself).",
+          "description": "May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element\u0027s descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.\n\nModifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself).",
           "items": {
             "$ref": "Extension.schema.json#/definitions/Extension"
           },
           "type": "array"
         },
         "language": {
-          "description": "The ISO-639-1 alpha 2 code in lower case for the language, optionally followed by a hyphen and the ISO-3166-1 alpha 2 code for the region in upper case; e.g. \"en\" for English, or \"en-US\" for American English versus \"en-AU\" for Australian English.",
+          "description": "The ISO-639-1 alpha 2 code in lower case for the language, optionally followed by a hyphen and the ISO-3166-1 alpha 2 code for the region in upper case; e.g. \"en\" for English, or \"en-US\" for American English versus \"en-EN\" for England English.",
           "$ref": "CodeableConcept.schema.json#/definitions/CodeableConcept"
         },
         "preferred": {
@@ -295,7 +303,6 @@
           "$ref": "Element.schema.json#/definitions/Element"
         }
       },
-      "type": "object",
       "additionalProperties": false,
       "required": [
         "language"
@@ -309,33 +316,37 @@
           "$ref": "string.schema.json#/definitions/string"
         },
         "extension": {
-          "description": "May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.",
+          "description": "May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.",
           "items": {
             "$ref": "Extension.schema.json#/definitions/Extension"
           },
           "type": "array"
         },
         "modifierExtension": {
-          "description": "May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element\u0027s descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.\n\nModifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself).",
+          "description": "May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element\u0027s descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.\n\nModifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself).",
           "items": {
             "$ref": "Extension.schema.json#/definitions/Extension"
           },
           "type": "array"
         },
         "other": {
-          "description": "Link to a Patient or RelatedPerson resource that concerns the same actual individual.",
+          "description": "The other patient resource that the link refers to.",
           "$ref": "Reference.schema.json#/definitions/Reference"
         },
         "type": {
           "description": "The type of link between this patient resource and another patient resource.",
-          "$ref": "#/definitions/code"
+          "enum": [
+            "replaced-by",
+            "replaces",
+            "refer",
+            "seealso"
+          ]
         },
         "_type": {
           "description": "Extensions for type",
           "$ref": "Element.schema.json#/definitions/Element"
         }
       },
-      "type": "object",
       "additionalProperties": false,
       "required": [
         "other"
